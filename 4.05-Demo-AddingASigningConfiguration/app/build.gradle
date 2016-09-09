@@ -60,7 +60,6 @@ The last couple files in the APK are the files that contain the signature
 
     26754  04-29-15 15:10   META-INF/CERT.SF
       776  04-29-15 15:10   META-INF/CERT.RSA
-
 */
 
 apply plugin: 'com.android.application'
@@ -74,12 +73,12 @@ android {
             storePassword 'password'
         }
     }
-    compileSdkVersion 24
-    buildToolsVersion "24.0.1"
+    compileSdkVersion 23
+    buildToolsVersion "23.0.3"
     defaultConfig {
         applicationId "com.udacity.gradle.signing"
         minSdkVersion 15
-        targetSdkVersion 24
+        targetSdkVersion 23
         versionCode 1
         versionName "1.0"
     }
@@ -94,5 +93,5 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:24.1.1'
+    compile 'com.android.support:appcompat-v7:23.4.0'
 }
