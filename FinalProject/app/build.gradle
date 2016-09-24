@@ -49,11 +49,6 @@ dependencies {
 
     compile 'org.greenrobot:eventbus:3.0.0'
 
-
-
-
-
-
 }
 /*
 Resolves dependency versions across test and production APKs, specifically, transitive

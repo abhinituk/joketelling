@@ -22,10 +22,13 @@ public class MainActivity extends ActionBarActivity {
 
     InterstitialAd mInterstitialAd;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
         //Initialize the interstitial ads
         mInterstitialAd= new InterstitialAd(this);
@@ -33,6 +36,7 @@ public class MainActivity extends ActionBarActivity {
         mInterstitialAd.setAdListener(new AdListener() {
             @Override
             public void onAdClosed() {
+
                 new EndpointsAsyncTask().execute("Abhishek");
             }
         });
