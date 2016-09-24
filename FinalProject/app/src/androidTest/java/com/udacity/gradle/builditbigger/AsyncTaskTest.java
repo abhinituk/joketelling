@@ -16,9 +16,6 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.action.ViewActions.click;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.assertNotNull;
 
 /**
@@ -51,8 +48,6 @@ public class AsyncTaskTest {
     @Test
     public void shouldReturnNonEmptyString()
     {
-        onView(withId(R.id.button)).perform(click());
-
         String joke = "";
         try{
             EndpointsAsyncTask task= new EndpointsAsyncTask();
