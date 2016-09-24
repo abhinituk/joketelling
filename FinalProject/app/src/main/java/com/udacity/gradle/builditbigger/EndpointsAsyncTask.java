@@ -1,9 +1,7 @@
 package com.udacity.gradle.builditbigger;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
-import android.util.Pair;
 
 import com.example.abhishek.myapplication.backend.myApi.MyApi;
 import com.google.api.client.extensions.android.http.AndroidHttp;
@@ -11,27 +9,27 @@ import com.google.api.client.extensions.android.json.AndroidJsonFactory;
 import com.google.api.client.googleapis.services.AbstractGoogleClientRequest;
 import com.google.api.client.googleapis.services.GoogleClientRequestInitializer;
 
-import java.io.IOException;
+import org.greenrobot.eventbus.EventBus;
 
-import xyz.jokedisplay.Joke;
+import java.io.IOException;
 
 /**
  * Created by Abhishek on 10-09-2016.
  */
-public class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, String> {
+public class EndpointsAsyncTask extends AsyncTask<String, Void, String> {
     private static MyApi myApiService = null;
     private Context context;
 
     @SafeVarargs
     @Override
-    protected final String doInBackground(Pair<Context, String>... params) {
+    protected final String doInBackground(String... params) {
         if(myApiService == null) {  // Only do this once
             MyApi.Builder builder = new MyApi.Builder(AndroidHttp.newCompatibleTransport(),
                     new AndroidJsonFactory(), null)
                     // options for running against local devappserver
                     // - 10.0.2.2 is localhost's IP address in Android emulator
                     // - turn off compression when running against local devappserver
-                    .setRootUrl("http://10.0.2.2:8080/_ah/api/")
+                    .setRootUrl("http://192.168.168.4:8080/_ah/api/")
                     .setGoogleClientRequestInitializer(new GoogleClientRequestInitializer() {
                         @Override
                         public void initialize(AbstractGoogleClientRequest<?> abstractGoogleClientRequest) throws IOException {
@@ -41,8 +39,8 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
             // end options for devappserver
             myApiService = builder.build();
         }
-        context = params[0].first;
-        String name = params[0].second;
+
+        String name = params[0];
 
         try {
             return myApiService.getJoke(name).execute().getData();
@@ -53,10 +51,7 @@ public class EndpointsAsyncTask extends AsyncTask<Pair<Context, String>, Void, S
 
     @Override
     protected void onPostExecute(String result) {
-        //Toast.makeText(context, result, Toast.LENGTH_LONG).show();
-        Intent intent = new Intent(context,Joke.class);
-        intent.putExtra("joke",result);
-        context.startActivity(intent);
+        EventBus.getDefault().post(new MessageEvent(result));
     }
 }
 

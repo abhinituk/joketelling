@@ -37,6 +37,8 @@ dependencies {
     // Set this dependency to build and run Espresso tests
     androidTestCompile 'com.android.support.test.espresso:espresso-core:2.2.1'
 
+    compile 'org.greenrobot:eventbus:3.0.0'
+
 
 
 

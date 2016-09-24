@@ -1,12 +1,16 @@
 package com.udacity.gradle.builditbigger;
 
-import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
+import xyz.jokedisplay.Joke;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -41,13 +45,28 @@ public class MainActivity extends ActionBarActivity {
     }
 
     public void tellJoke(View view) {
-//        JokeProvider jokeProvider = new JokeProvider();
-//        String joke = jokeProvider.getJoke();
-//        Intent intent= new Intent(this,Joke.class);
-//        intent.putExtra("joke",joke);
-//        startActivity(intent);
 
-        new EndpointsAsyncTask().execute(new Pair<Context, String>(this, "Abhishek"));
+
+        new EndpointsAsyncTask().execute("Abhishek");
+    }
+
+    @Subscribe
+    public void onMessageEvent(MessageEvent event) {
+        Intent intent= new Intent(this,Joke.class);
+        intent.putExtra("joke",event.message);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
     }
 }
 
