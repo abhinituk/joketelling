@@ -47,13 +47,13 @@ public class MainActivity extends ActionBarActivity {
     public void tellJoke(View view) {
 
 
-        new EndpointsAsyncTask().execute("Abhishek");
+        new EndpointsAsyncTask().execute(getString(R.string.name));
     }
 
     @Subscribe
     public void onMessageEvent(MessageEvent event) {
         Intent intent= new Intent(this,Joke.class);
-        intent.putExtra("joke",event.message);
+        intent.putExtra(getString(R.string.joke),event.message);
         startActivity(intent);
     }
 
